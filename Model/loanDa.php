@@ -113,7 +113,6 @@ class loanDa {
             echo $ex->getMessage();
         }
     }
-
 }
 
 //$da = new loanDa();

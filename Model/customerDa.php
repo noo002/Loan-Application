@@ -173,5 +173,7 @@ class customerDa {
     }
 
 }
-
+//$c = new customerDa();
+//$data = $c->getCustomerDetail(3);
+//echo '<img src="data:image/jpeg;base64,' . $data->picture . '" width="60px" height="60px"/>';
 

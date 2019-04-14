@@ -66,28 +66,17 @@ if ($validation) {
                 $payment = new payment($loanId, $amountReceived, $paymentType);
                 $amountPerInstalment = $_SESSION['loan']['amountPerInstalment'];
                 $paymentDa = new paymentDa();
-                $totalAmountFromDb = $paymentDa->getTotalPartialPayment($loanId) + $amountReceived;
-                $instalment = 0;
-                for ($b = 0; $b < 100; $b++) {
-                    if ($totalAmountFromDb >= $amountPerInstalment) {
-                        $amountPerInstalment = $amountPerInstalment * 2;
-                        $instalment = $instalment + 1;
-                    }
-                    if ($amountPerInstalment > $totalAmountFromDb) {
-                        break;
-                    }
+                $paymentDa->newPayment($payment);
+                $sumAmount = $paymentDa->SumAmountReceived($loanId);
+                $value = $sumAmount / $amountPerInstalment;
+                $value = floor($value);
+                $result = $loanDa->updateLoanInstalment($loanId, $value);
+                if($result == 1){
+                    $message = "partial Payment Have Done";
                 }
-                $result = $paymentDa->newPayment($payment);
-                $loanDa = new loanDa();
-                $result2 = $loanDa->updateLoanInstalment($loanId, $instalment);
-                $loanDetailDa = new loanDetailDa();
-                $instalmentLeft = $loanDetailDa->getInstalmentLeft($loanId);
-                if ($instalmentLeft == 0) {
-                    $updateLoanStatus = $loanDa->updateLoanStatus($loanId);
+                else{
+                    $message = "Fail to make Partial Payment";
                 }
-                $message = "Partial Payment have made";
-            } else {
-                $message = "Amount received more than or equal to 1 instalment";
             }
         } else if ($paymentType == 3) {
             $payment = new payment($loanId, $amountReceived, $paymentType);

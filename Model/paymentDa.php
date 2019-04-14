@@ -62,8 +62,24 @@ class paymentDa {
             echo $ex->getMessage();
         }
     }
+    public function SumAmountReceived($loanId){
+        $conn = Connection::getInstance();
+        $sqlSelected = "select sum(amountReceived) from payment where loanId = ?";
+        $stmt = $conn->getDb()->prepare($sqlSelected);
+        $stmt->bindParam(1,$loanId);
+        try{
+            $stmt->execute();
+            foreach($stmt->fetch() as $row){
+                $result = $row; 
+                break;
+            }
+            return $result;
+        } catch (Exception $ex) {
+
+        }
+                
+    }
 
 }
-
 //$da = new paymentDa();
-//echo $da->getTotalPartialPayment(1);
+//echo $da->getInstallmentLeft(4);

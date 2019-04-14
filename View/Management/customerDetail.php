@@ -62,8 +62,8 @@ require_once 'mobileContent.php';
                                                 echo '<img src="data:image/jpeg;base64,' . $activityDetail->image . '" width="60px" height="60px"/>';
                                                 --------->
                                                 <?php
-                                                if (!empty($customerDetail->picture)) {
-                                                    echo '<img src="data:image/jpeg;base64,' . $customerDetail->picture . '" width="60px" height="60px"/>';
+                                                if ($customerDetail->picture != null) {
+                                                    echo '<img src="data:image/jpeg;base64,' . $customerDetail->picture . '" width="50px" height="50px"/>';
                                                 } else {
                                                     ?>
                                                     <img src="noimage.png" width="50px" height="50px"/>
